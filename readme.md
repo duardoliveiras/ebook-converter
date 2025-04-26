@@ -1,61 +1,97 @@
-### Epub batch converter
+# Manga E-book Converter
 
-Esse script python foi desenvolvido para realizar a conversão de um grupo de arquivos para um determinado formato de saída. Ele utiliza o [calibre](https://calibre-ebook.com/) para converter e o python para manipular a pasta de entrada/saída.
+Esta aplicação permite baixar mangas do Mangadex no formato `.pdf` e convertê-los para diversos formatos compatíveis com leitores de e-books, como `.azw3`, `.epub`, `.mobi`, entre outros.
 
-`/ebook`: pasta de entrada
-`/converted`: pasta de saída
+## Funcionalidades
 
-#### Como usar?
+1. **Baixar mangas do Mangadex**: Baixa capítulos de um manga diretamente do Mangadex, em formato `.pdf`.
+2. **Converter arquivos para formatos de e-reader**: Converte arquivos `.pdf` para vários outros formatos, incluindo `.azw3`, `.epub` e `.mobi`.
+3. **Suporte a múltiplos formatos**: A aplicação suporta conversão de diversos formatos de e-books para e-readers, incluindo `.azw3`, `.chm`, `.epub`, `.html`, `.mobi`, entre outros.
 
-Definir `ebook_convert_path` de acordo com o seu sistema operacional.
+## Pré-requisitos
 
-Para encontrar o caminho no linux:
+- Python 3.x
+- `ebook-convert` (parte do Calibre).
 
-```bash
-$ where ebook-convert
-/usr/bin/ebook-convert
+## Instalação
 
-```
-
-```bash
-python3 main.py --path /usr/bin/ebook-convert --out [format]
-```
-
-O calibre tem suporte para conversão de:
-
-- .azw3
-- .chm
-- .comic
-- .djvu
-- .docx
-- .epub
-- .fb2
-- .htlz
-- .html
-- .lit
-- .lrf
-- .mobi
-- .odt
-- .pdb
-- .pdf
-- .pml
-- .rb
-- .rtf
-- .recipe
-- .snb
-- .tcr
-- .txt
-
-#### Extra
-
-Para baixar volumes de mangás direto do Manga Dex:
+1. Clone o repositório:
 
 ```bash
-$ python -m venv .venv
-$ source ./.venv/bin/activate
-$ pip install mangadex-downloader
-$ pip install lxml
-$ pip install bs4
-$ pip install Pillow
-$ mangadex-dl "https://mangadex.org/title/.../" --save-as "epub-volume"
+git clone
+cd
 ```
+
+2. Instalação calibri (Ubuntu):
+
+```bash
+sudo -v && wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sudo sh /dev/stdin
+```
+
+3. Instale as dependências necessárias:
+
+```bash
+pip install -r requirements.txt
+```
+
+4. Certifique-se de que as ferramentas `ebook-convert` e `mangadex-dl` estão instaladas no sistema.
+
+```bash
+which mangadex-dl
+which ebook-convert
+```
+
+## Como usar
+
+A aplicação possui dois principais comandos: `manga` e `converter`.
+
+### 1. **Comando `manga`**
+
+Baixa um manga do Mangadex, em formato `.pdf`, e converte para o formato desejado.
+
+#### Exemplo de uso:
+
+```bash
+python manga_converter.py manga \
+--url "https://mangadex.org/title/... " \
+--out "azw3" \
+-sc 1 \
+-ec 10 \
+--lang "pt-br" \
+--ecp "/usr/bin/ebook-convert" \
+--name "manga_convertido"
+```
+
+**Argumentos**:
+
+- `--url`: URL do manga no Mangadex.
+- `--out`: Formato de saída (ex: `azw3`, `epub`, `mobi`).
+- `-sc`: Capítulo inicial para download.
+- `-ec`: Capítulo final para download.
+- `--lang`: Idioma (opcional).
+- `--ecp`: Caminho para o executável `ebook-convert` (padrão é `/usr/bin/ebook-convert`).
+- `--name`: Nome para o arquivo de saída.
+
+### 2. **Comando `converter`**
+
+Converte todos os arquivos na pasta `./ebooks/` para o formato desejado.
+
+#### Exemplo de uso:
+
+```bash
+python manga_converter.py converter \
+--out "epub" \
+--ecp "/usr/bin/ebook-convert" \
+--name "manga_convertido"
+```
+
+**Argumentos**:
+
+- `--out`: Formato de saída (ex: `azw3`, `epub`, `mobi`).
+- `--ecp`: Caminho para o executável `ebook-convert` (padrão é `/usr/bin/ebook-convert`).
+- `--name`: Nome para o arquivo de saída.
+
+## Diretórios
+
+- **`./ebooks/`**: Diretório onde os mangas em `.pdf` serão baixados.
+- **`./converted/`**: Diretório onde os arquivos convertidos serão salvos.
