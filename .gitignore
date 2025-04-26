@@ -1,3 +1,5 @@
 converted/*
 ebooks/*
+!converted/.gitkeep
+!ebooks/.gitkeep
 .venv
